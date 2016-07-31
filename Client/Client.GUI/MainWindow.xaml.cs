@@ -32,6 +32,8 @@ namespace Client.GUI
 
             returnString = client.GetFileNames();
             textBox.Text = returnString[0];
+
+            //client.close()   // don't know where this is appropriate 
         }
     }
 }

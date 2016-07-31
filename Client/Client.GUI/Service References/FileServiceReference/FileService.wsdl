@@ -230,11 +230,11 @@
   </wsdl:binding>
   <wsdl:service name="FileService">
     <wsdl:port name="WSHttpBinding_IFileService" binding="tns:WSHttpBinding_IFileService">
-      <soap12:address location="http://localhost:8000/Server/FileService" />
+      <soap12:address location="http://localhost:8000/Server/Service" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://localhost:8000/Server/FileService</wsa10:Address>
+        <wsa10:Address>http://localhost:8000/Server/Service</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-MSO161B\Megan</Upn>
+          <Upn>DESKTOP-UL7UJDJ\Megan</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

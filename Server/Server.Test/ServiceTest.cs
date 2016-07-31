@@ -15,7 +15,7 @@ namespace Server.Test
         [Test]
         public void GetFilesTest()
         {
-            Service.Service service = new Service.Service();
+            Service.FileService service = new Service.FileService();
             service.GetFileNames().Should().NotBeEmpty();
 
 

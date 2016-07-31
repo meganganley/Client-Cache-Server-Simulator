@@ -16,12 +16,12 @@ namespace Server.ConsoleApp
             Uri baseAddress = new Uri("http://localhost:8000/Server/");
 
             // Step 2 Create a ServiceHost instance
-            ServiceHost selfHost = new ServiceHost(typeof(Service.Service), baseAddress);
+            ServiceHost selfHost = new ServiceHost(typeof(Service.FileService), baseAddress);
 
             try
             {
                 // Step 3 Add a service endpoint.
-                selfHost.AddServiceEndpoint(typeof(IService), new WSHttpBinding(), "Service");
+                selfHost.AddServiceEndpoint(typeof(IFileService), new WSHttpBinding(), "Service");
 
                 // Step 4 Enable metadata exchange.
                 ServiceMetadataBehavior smb = new ServiceMetadataBehavior();

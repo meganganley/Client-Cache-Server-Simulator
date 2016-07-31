@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Server.Service
 {
@@ -14,9 +15,14 @@ namespace Server.Service
 
         public IEnumerable<string> GetFileNames()
         {
+            string[] files = Directory.GetFiles(ServerFilesLocation)
+                                     .Select(Path.GetFileName)
+                                     .ToArray();
 
-            int length = 0;
-            string[] dirs = Directory.GetFiles(ServerFilesLocation);
+            return files;
+            /*
+                
+            return Path.GetFileName(ServerFilesLocation);
             try
             {
                 Console.WriteLine(ServerFilesLocation);
@@ -41,6 +47,7 @@ namespace Server.Service
 
 
             return dirs;
+            */
 
         }
 
