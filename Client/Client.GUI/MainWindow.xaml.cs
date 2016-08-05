@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +16,19 @@ using System.Windows.Shapes;
 
 namespace Client.GUI
 {
+
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private static readonly string ClientFilesLocation = @"C:\Users\Megan\Documents\S2 2016\CS 711\ClientFiles";        //todo
+
+        private string[] fullPaths;                 // TODO: FIX
+        private string[] fileNames;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -28,12 +37,25 @@ namespace Client.GUI
         private void button_Click(object sender, RoutedEventArgs e)
         {
             FileServiceReference.FileServiceClient client = new FileServiceReference.FileServiceClient();
-            string[] returnString;
+            fullPaths = client.GetFileNames(); // want to preserve full path name in case of nested directories
 
-            returnString = client.GetFileNames();
-            textBox.Text = returnString[0];
+            fileNames = fullPaths.Select(System.IO.Path.GetFileName).ToArray();    // Conflict in System.IO.Path vs some graphical element
+
+            listBox.ItemsSource = fileNames;
+
+            textBox.Text = fileNames[0];
 
             //client.close()   // don't know where this is appropriate 
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            FileServiceReference.FileServiceClient client = new FileServiceReference.FileServiceClient();
+            byte[] b = client.GetFile(fullPaths[0]);        // breaks when file too big -- change binding 
+
+            File.WriteAllBytes(System.IO.Path.Combine(ClientFilesLocation, fileNames[0]), b);
+
+            Console.WriteLine("test");
         }
     }
 }

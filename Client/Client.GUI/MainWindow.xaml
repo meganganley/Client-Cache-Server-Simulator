@@ -7,8 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="125,80,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="175,164,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="23*"/>
+            <ColumnDefinition Width="24*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="button" Content="Get filenames" HorizontalAlignment="Left" Margin="175,34,0,0" VerticalAlignment="Top" Width="167" Click="button_Click" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="134.421,31,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <Button x:Name="button1" Content="Download first file" HorizontalAlignment="Left" Margin="175,267,0,0" VerticalAlignment="Top" Width="167" Click="button1_Click" Height="21" Grid.ColumnSpan="2"/>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Margin="175,71,0,57" Width="167" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

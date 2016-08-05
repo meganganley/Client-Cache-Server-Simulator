@@ -20,8 +20,12 @@ namespace Server.ConsoleApp
 
             try
             {
+
+               // BasicHttpBinding b = new BasicHttpBinding();                    // fuck
+                // b.TransferMode = TransferMode.StreamedResponse;                 // TODO 
+
                 // Step 3 Add a service endpoint.
-                selfHost.AddServiceEndpoint(typeof(IFileService), new WSHttpBinding(), "Service");
+                selfHost.AddServiceEndpoint(typeof(IFileService), new WSHttpBinding(),  "Service");// change from ws to basic
 
                 // Step 4 Enable metadata exchange.
                 ServiceMetadataBehavior smb = new ServiceMetadataBehavior();

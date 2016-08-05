@@ -22,10 +22,10 @@ namespace Client.GUI.FileServiceReference {
         System.Threading.Tasks.Task<string[]> GetFileNamesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/GetFile", ReplyAction="http://tempuri.org/IFileService/GetFileResponse")]
-        System.IO.Stream GetFile(string filename);
+        byte[] GetFile(string filename);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/GetFile", ReplyAction="http://tempuri.org/IFileService/GetFileResponse")]
-        System.Threading.Tasks.Task<System.IO.Stream> GetFileAsync(string filename);
+        System.Threading.Tasks.Task<byte[]> GetFileAsync(string filename);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -63,11 +63,11 @@ namespace Client.GUI.FileServiceReference {
             return base.Channel.GetFileNamesAsync();
         }
         
-        public System.IO.Stream GetFile(string filename) {
+        public byte[] GetFile(string filename) {
             return base.Channel.GetFile(filename);
         }
         
-        public System.Threading.Tasks.Task<System.IO.Stream> GetFileAsync(string filename) {
+        public System.Threading.Tasks.Task<byte[]> GetFileAsync(string filename) {
             return base.Channel.GetFileAsync(filename);
         }
     }

@@ -14,7 +14,7 @@ namespace Server.Service
         IEnumerable<string> GetFileNames();
 
         [OperationContract]
-        Stream GetFile(string filename);
+        byte[] GetFile(string filename);
 
         // TODO: Add your service operations here
     }
