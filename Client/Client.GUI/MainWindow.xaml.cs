@@ -23,32 +23,31 @@ namespace Client.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string ClientFilesLocation = @"C:\Users\Megan\Documents\S2 2016\CS 711\ClientFiles"; //todo
 
-        private static readonly string ClientFilesLocation = @"C:\Users\Megan\Documents\S2 2016\CS 711\ClientFiles";        //todo
-
-        private string[] fullPaths;                 // TODO: FIX
-        private string[] fileNames;
+        private string[] fullPaths = {};                 // TODO: FIX
+        private string[] fileNames = {};
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void QueryFileNamesButton_Click(object sender, RoutedEventArgs e)
         {
             FileServiceReference.FileServiceClient client = new FileServiceReference.FileServiceClient();
             fullPaths = client.GetFileNames(); // want to preserve full path name in case of nested directories
 
             fileNames = fullPaths.Select(System.IO.Path.GetFileName).ToArray();    // Conflict in System.IO.Path vs some graphical element
 
-            listBox.ItemsSource = fileNames;
+            FilesListBox.ItemsSource = fileNames;
 
-            textBox.Text = fileNames[0];
+            FirstFileTextBox.Text = fileNames[0];
 
-            //client.close()   // don't know where this is appropriate 
+            client.Close(); // don't know where this is appropriate 
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void DownloadFilesButton_Click(object sender, RoutedEventArgs e)
         {
             FileServiceReference.FileServiceClient client = new FileServiceReference.FileServiceClient();
             byte[] b = client.GetFile(fullPaths[0]);        // breaks when file too big -- change binding 
@@ -56,6 +55,8 @@ namespace Client.GUI
             File.WriteAllBytes(System.IO.Path.Combine(ClientFilesLocation, fileNames[0]), b);
 
             Console.WriteLine("test");
+
+            client.Close();
         }
     }
 }
