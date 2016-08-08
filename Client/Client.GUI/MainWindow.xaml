@@ -5,16 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client.GUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="Client" Height="400" Width="350" ResizeMode="NoResize">
+
+    <Grid Margin = "10, 5, 10, 20">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Button x:Name="QueryFileNamesButton" Grid.Row="0" Content="Retrieve list of available files" Click="QueryFileNamesButton_Click" Background="#FFD4E0FB"/>
+        <ListBox x:Name="FilesListBox" Grid.Row="1"/>
+        <Button x:Name="DownloadFilesButton" Grid.Row="2" Content="Download selected file" Click="DownloadFilesButton_Click" Background="LightYellow"/>
+        <Button x:Name="DisplayContentsButton" Grid.Row="3" Content="Display contents of selected file" Background="#FFEBCBF5" Click="DisplayContentsButton_Click"/>
+    </Grid>
+            <!--
+ ResizeMode="NoResize"
+    <Grid HorizontalAlignment="Center" Margin="0,24,0,109">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="23*"/>
-            <ColumnDefinition Width="24*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="QueryFileNamesButton" Content="Get filenames" HorizontalAlignment="Left" Margin="175,34,0,0" VerticalAlignment="Top" Width="167" Click="QueryFileNamesButton_Click" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="FirstFileTextBox" HorizontalAlignment="Left" Height="23" Margin="134.421,31,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
-        <Button x:Name="DownloadFilesButton" Content="Download first file" HorizontalAlignment="Left" Margin="175,267,0,0" VerticalAlignment="Top" Width="167" Click="DownloadFilesButton_Click" Height="21" Grid.ColumnSpan="2"/>
-        <ListBox x:Name="FilesListBox" HorizontalAlignment="Left" Margin="175,71,0,57" Width="167" Grid.ColumnSpan="2"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Button x:Name="QueryFileNamesButton"  Content="Get filenames" HorizontalAlignment="Center" VerticalAlignment="Top" Width="168" Click="QueryFileNamesButton_Click" Height="20" Margin="82,10,94,0"/>
+        <ListBox x:Name="FilesListBox"  Grid.Row="1" HorizontalAlignment="Left" Margin="30,30,0,85" Width="416" SelectionChanged="FilesListBox_SelectionChanged"/>
+        <Button x:Name="DownloadFilesButton"  Grid.Row="2" Content="Download file" HorizontalAlignment="Left" Margin="30,96,0,0" VerticalAlignment="Top" Width="167" Click="DownloadFilesButton_Click" Height="21"/>
+        <Button x:Name="DisplayContentsButton" Content="Display contents of file" Grid.Row="3" HorizontalAlignment="Left" Margin="30,133,0,0" VerticalAlignment="Top" Width="167" Height="20"/>
 
     </Grid>
+
+-->
+
+    
 </Window>
