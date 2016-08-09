@@ -71,7 +71,7 @@ namespace Client.GUI
         {
             int selectedIndex = FilesListBox.SelectedIndex;
             string file = System.IO.Path.Combine(ClientFilesLocation, fileNames[selectedIndex]);
-            System.Diagnostics.Process.Start(file);
+            System.Diagnostics.Process.Start(file); // some exception handling todo 
         }
 
         /*
