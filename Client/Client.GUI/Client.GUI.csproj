@@ -112,20 +112,20 @@
     <WCFMetadataStorage Include="Service References\FileServiceReference\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\FileServiceReference\CacheFileService.wsdl" />
     <None Include="Service References\FileServiceReference\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\FileServiceReference\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\FileServiceReference\FileService1.wsdl" />
+    <None Include="Service References\FileServiceReference\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\FileServiceReference\item1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\FileServiceReference\item11.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FileServiceReference\item12.xsd">
+    <None Include="Service References\FileServiceReference\item2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\FileServiceReference\Reference.svcmap">
@@ -134,7 +134,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\FileServiceReference\item1.disco" />
+    <None Include="Service References\FileServiceReference\item.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

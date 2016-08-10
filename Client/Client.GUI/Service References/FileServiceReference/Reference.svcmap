@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8081/Server/" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8081/Cache/" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="73bdb3ff-68fb-4548-bdd1-62b139fec03b" SourceId="1" SourceUrl="http://localhost:8081/Server/?xsd=xsd0" />
-    <MetadataFile FileName="item11.xsd" MetadataType="Schema" ID="1f761c3d-cdb1-46c3-a8f5-38d4327288ea" SourceId="1" SourceUrl="http://localhost:8081/Server/?xsd=xsd2" />
-    <MetadataFile FileName="item12.xsd" MetadataType="Schema" ID="bb62c6ef-de10-4849-b2a3-2893ccbb293b" SourceId="1" SourceUrl="http://localhost:8081/Server/?xsd=xsd1" />
-    <MetadataFile FileName="item1.disco" MetadataType="Disco" ID="a583147e-1b36-409b-97ca-1721f66b19e8" SourceId="1" SourceUrl="http://localhost:8081/Server/?disco" />
-    <MetadataFile FileName="FileService1.wsdl" MetadataType="Wsdl" ID="ba246129-d34a-49a8-9129-fe9fc88d719b" SourceId="1" SourceUrl="http://localhost:8081/Server/?wsdl" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="c7929428-2ddd-429d-9572-a498cb7891f3" SourceId="1" SourceUrl="http://localhost:8081/Cache/?xsd=xsd2" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="911da145-a38b-4fb8-a98b-53467538852f" SourceId="1" SourceUrl="http://localhost:8081/Cache/?xsd=xsd1" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="11e7bff1-433b-4115-91f5-b99ee66c0c53" SourceId="1" SourceUrl="http://localhost:8081/Cache/?xsd=xsd0" />
+    <MetadataFile FileName="CacheFileService.wsdl" MetadataType="Wsdl" ID="92fdf33b-2aad-4b90-80f1-9e3ed4aa8fa5" SourceId="1" SourceUrl="http://localhost:8081/Cache/?wsdl" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="e157a597-bbaf-4eef-8c7d-3fa94afdad0e" SourceId="1" SourceUrl="http://localhost:8081/Cache/?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

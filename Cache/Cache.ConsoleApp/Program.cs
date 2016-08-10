@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.Text;
-using System.Threading.Tasks;
 using Cache.Service;
 
 namespace Cache.ConsoleApp
@@ -14,7 +10,7 @@ namespace Cache.ConsoleApp
         static void Main(string[] args)
         {
             // Step 1 Create a URI to serve as the base address.
-            Uri baseAddress = new Uri("http://localhost:8081/Server/");     //TODO 
+            Uri baseAddress = new Uri("http://localhost:8081/Cache/");     //TODO 
 
             // Step 2 Create a ServiceHost instance
             ServiceHost selfHost = new ServiceHost(typeof(CacheFileService), baseAddress);

@@ -12,46 +12,46 @@ namespace Client.GUI.FileServiceReference {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="FileServiceReference.IFileService")]
-    public interface IFileService {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="FileServiceReference.ICacheFileService")]
+    public interface ICacheFileService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/GetFileNames", ReplyAction="http://tempuri.org/IFileService/GetFileNamesResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICacheFileService/GetFileNames", ReplyAction="http://tempuri.org/ICacheFileService/GetFileNamesResponse")]
         string[] GetFileNames();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/GetFileNames", ReplyAction="http://tempuri.org/IFileService/GetFileNamesResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICacheFileService/GetFileNames", ReplyAction="http://tempuri.org/ICacheFileService/GetFileNamesResponse")]
         System.Threading.Tasks.Task<string[]> GetFileNamesAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/GetFile", ReplyAction="http://tempuri.org/IFileService/GetFileResponse")]
-        byte[] GetFile(string filename);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICacheFileService/GetFile", ReplyAction="http://tempuri.org/ICacheFileService/GetFileResponse")]
+        byte[] GetFile(string path);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/GetFile", ReplyAction="http://tempuri.org/IFileService/GetFileResponse")]
-        System.Threading.Tasks.Task<byte[]> GetFileAsync(string filename);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICacheFileService/GetFile", ReplyAction="http://tempuri.org/ICacheFileService/GetFileResponse")]
+        System.Threading.Tasks.Task<byte[]> GetFileAsync(string path);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IFileServiceChannel : Client.GUI.FileServiceReference.IFileService, System.ServiceModel.IClientChannel {
+    public interface ICacheFileServiceChannel : Client.GUI.FileServiceReference.ICacheFileService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class FileServiceClient : System.ServiceModel.ClientBase<Client.GUI.FileServiceReference.IFileService>, Client.GUI.FileServiceReference.IFileService {
+    public partial class CacheFileServiceClient : System.ServiceModel.ClientBase<Client.GUI.FileServiceReference.ICacheFileService>, Client.GUI.FileServiceReference.ICacheFileService {
         
-        public FileServiceClient() {
+        public CacheFileServiceClient() {
         }
         
-        public FileServiceClient(string endpointConfigurationName) : 
+        public CacheFileServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public FileServiceClient(string endpointConfigurationName, string remoteAddress) : 
+        public CacheFileServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public FileServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public CacheFileServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public FileServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public CacheFileServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
@@ -63,12 +63,12 @@ namespace Client.GUI.FileServiceReference {
             return base.Channel.GetFileNamesAsync();
         }
         
-        public byte[] GetFile(string filename) {
-            return base.Channel.GetFile(filename);
+        public byte[] GetFile(string path) {
+            return base.Channel.GetFile(path);
         }
         
-        public System.Threading.Tasks.Task<byte[]> GetFileAsync(string filename) {
-            return base.Channel.GetFileAsync(filename);
+        public System.Threading.Tasks.Task<byte[]> GetFileAsync(string path) {
+            return base.Channel.GetFileAsync(path);
         }
     }
 }

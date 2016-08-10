@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace Server.Service
 {
@@ -18,7 +16,7 @@ namespace Server.Service
             return fullPaths;
 
         }
-
+        // todo : byte[] to string?
         public byte[] GetFile(string fullPath)
         {
 

@@ -1,26 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Client.GUI
 {
-
-
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private const string ClientFilesLocation = @"C:\Users\Megan\Documents\S2 2016\CS 711\ClientFiles"; //todo
@@ -35,7 +20,7 @@ namespace Client.GUI
 
         private void QueryFileNamesButton_Click(object sender, RoutedEventArgs e)
         {
-            FileServiceReference.FileServiceClient client = new FileServiceReference.FileServiceClient();
+            FileServiceReference.CacheFileServiceClient client = new FileServiceReference.CacheFileServiceClient();
             fullServerPaths = client.GetFileNames(); // want to preserve full path name in case of nested directories
 
             fileNames = fullServerPaths.Select(System.IO.Path.GetFileName).ToArray();    // Conflict in System.IO.Path vs some graphical element
@@ -51,7 +36,7 @@ namespace Client.GUI
         {
             int selectedIndex = FilesListBox.SelectedIndex;
 
-            FileServiceReference.FileServiceClient client = new FileServiceReference.FileServiceClient();
+            FileServiceReference.CacheFileServiceClient client = new FileServiceReference.CacheFileServiceClient();
             byte[] b = client.GetFile(fullServerPaths[selectedIndex]);        // breaks when file too big -- change binding 
 
 
