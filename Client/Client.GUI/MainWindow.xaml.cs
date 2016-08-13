@@ -47,11 +47,6 @@ namespace Client.GUI
             client.Close();
         }
 
-        private void FilesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void DisplayContentsButton_Click(object sender, RoutedEventArgs e)
         {
             int selectedIndex = FilesListBox.SelectedIndex;

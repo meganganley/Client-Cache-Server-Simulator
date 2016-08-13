@@ -27,7 +27,7 @@ namespace Cache.ConsoleApp
 
                 // Step 5 Start the service.
                 selfHost.Open();
-                Console.WriteLine("The service is ready.");
+                Console.WriteLine("The cache service is ready.");
                 Console.WriteLine("Press <ENTER> to terminate service.");
                 Console.WriteLine();
                 Console.ReadLine();

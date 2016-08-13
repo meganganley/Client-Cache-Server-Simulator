@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Cache.ServerClient;
 
 namespace Cache.Service
 {
@@ -12,21 +13,30 @@ namespace Cache.Service
 
         public IEnumerable<string> GetFileNames()
         {
-            // TODO: GET FILENAMES FROM SERVER SERVICEREFERENCE
-
-            string[] fullPaths = Directory.GetFiles(CacheFilesLocation);   //  .Select(Path.GetFileName)
-                                                                           // .ToArray()  
-            return fullPaths;
-
+            Client c = new Client();
+            return c.GetFileNames();
         }
     
         public byte[] GetFile(string path)
         {
+            string file = Path.GetFileName(path);
+
+            if (File.Exists(Path.Combine(CacheFilesLocation, file)))
+            {
+                return File.ReadAllBytes(path);     // todo: breaks with nested dirs -- don't know if full path required here
+            }
+            else
+            {
+                Client c = new Client();
+                byte[] b = c.GetFile(path);
+                File.WriteAllBytes(System.IO.Path.Combine(CacheFilesLocation, file), b);
+
+                return b;
+            }
+
 
             // TODO: CHECK FILE NAME, IF IN CACHE RETURN. ELSE GET FROM SERVER SERVICEREFERENCE
 
-            byte[] buff = File.ReadAllBytes(path);
-            return buff;
         }
     }
 }

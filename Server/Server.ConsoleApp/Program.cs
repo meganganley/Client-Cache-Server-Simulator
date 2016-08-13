@@ -10,7 +10,7 @@ namespace Server.ConsoleApp
         static void Main(string[] args)
         {
             // Step 1 Create a URI to serve as the base address.
-            Uri baseAddress = new Uri("http://localhost:8081/Server/");
+            Uri baseAddress = new Uri("http://localhost:8082/Server/");
 
             // Step 2 Create a ServiceHost instance
             ServiceHost selfHost = new ServiceHost(typeof(Service.FileService), baseAddress);
