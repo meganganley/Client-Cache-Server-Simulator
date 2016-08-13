@@ -10,8 +10,8 @@ namespace Client.GUI
     {
         private const string ClientFilesLocation = @"C:\Users\Megan\Documents\S2 2016\CS 711\ClientFiles"; //todo
 
-        private string[] fullServerPaths = {};                 // TODO: FIX
-        private string[] fileNames = {};
+        private string[] _fullServerPaths = {};                 // TODO: FIX
+        private string[] _fileNames = {};
 
         public MainWindow()
         {
@@ -21,28 +21,27 @@ namespace Client.GUI
         private void QueryFileNamesButton_Click(object sender, RoutedEventArgs e)
         {
             FileServiceReference.CacheFileServiceClient client = new FileServiceReference.CacheFileServiceClient();
-            fullServerPaths = client.GetFileNames(); // want to preserve full path name in case of nested directories
+            
+            // want to preserve full path name in case of nested directories
+            _fullServerPaths = client.GetFileNames();
 
-            fileNames = fullServerPaths.Select(System.IO.Path.GetFileName).ToArray();    // Conflict in System.IO.Path vs some graphical element
+            // Conflict in System.IO.Path vs some graphical element
+            _fileNames = _fullServerPaths.Select(System.IO.Path.GetFileName).ToArray();
 
-            FilesListBox.ItemsSource = fileNames;
+            FilesListBox.ItemsSource = _fileNames;
 
-          //  FirstFileTextBox.Text = fileNames[0];
-
-            client.Close(); // don't know where this is appropriate 
+            client.Close(); 
         }
 
         private void DownloadFilesButton_Click(object sender, RoutedEventArgs e)
         {
+            // which file currently dealing with 
             int selectedIndex = FilesListBox.SelectedIndex;
 
             FileServiceReference.CacheFileServiceClient client = new FileServiceReference.CacheFileServiceClient();
-            byte[] b = client.GetFile(fullServerPaths[selectedIndex]);        // breaks when file too big -- change binding 
+            byte[] b = client.GetFile(_fullServerPaths[selectedIndex]);        
 
-
-            File.WriteAllBytes(System.IO.Path.Combine(ClientFilesLocation, fileNames[selectedIndex]), b);
-
-            Console.WriteLine("test");
+            File.WriteAllBytes(System.IO.Path.Combine(ClientFilesLocation, _fileNames[selectedIndex]), b);
 
             client.Close();
         }
@@ -50,43 +49,10 @@ namespace Client.GUI
         private void DisplayContentsButton_Click(object sender, RoutedEventArgs e)
         {
             int selectedIndex = FilesListBox.SelectedIndex;
-            string file = System.IO.Path.Combine(ClientFilesLocation, fileNames[selectedIndex]);
+            string file = System.IO.Path.Combine(ClientFilesLocation, _fileNames[selectedIndex]);
+            // use windows default program to open file 
             System.Diagnostics.Process.Start(file); // some exception handling todo 
         }
 
-        /*
-        async void DefaultLaunch()
-        {
-            // Path to the file in the app package to launch
-            string imageFile = @"images\test.png";
-
-            System.Diagnostics.Process.Start(@"c:\textfile.txt");
-            
-            /*
-
-            var file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(imageFile);
-
-
-
-            if (file != null)
-            {
-                // Launch the retrieved file
-                var success = await Windows.System.Launcher.LaunchFileAsync(file);
-
-                if (success)
-                {
-                    // File launched
-                }
-                else
-                {
-                    // File launch failed
-                }
-            }
-            else
-            {
-                // Could not find file
-            }
-        }
-        */
     }
 }

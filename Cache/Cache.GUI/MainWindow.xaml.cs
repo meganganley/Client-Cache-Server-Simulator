@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Cache.GUI
 {
@@ -42,16 +30,15 @@ namespace Cache.GUI
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(CacheFilesLocation);
             
             foreach (System.IO.FileInfo file in dir.GetFiles()) file.Delete();
-          //  foreach (System.IO.DirectoryInfo subDirectory in dir.GetDirectories()) subDirectory.Delete(true);   // need to handle nested dirs
+            // need to handle nested dirs
+            //  foreach (System.IO.DirectoryInfo subDirectory in dir.GetDirectories()) subDirectory.Delete(true);   
 
-            QueryFileNamesButton_Click(sender, e);  // works?? todo 
-
-            // make sure to refresh list of files as well todo 
-
+            QueryFileNamesButton_Click(sender, e);  
         }
 
         private void ViewLogButton_Click(object sender, RoutedEventArgs e)
         {
+            // todo : something
 //            int selectedIndex = FilesListBox.SelectedIndex;
 //            string file = System.IO.Path.Combine(ClientFilesLocation, fileNames[selectedIndex]);
 //            System.Diagnostics.Process.Start(file); // some exception handling todo 

@@ -11,12 +11,11 @@ namespace Server.Service
 
         public IEnumerable<string> GetFileNames()
         {
-            string[] fullPaths = Directory.GetFiles(ServerFilesLocation);   //  .Select(Path.GetFileName)
-                                                                              // .ToArray()  
+            string[] fullPaths = Directory.GetFiles(ServerFilesLocation);  
             return fullPaths;
 
         }
-        // todo : byte[] to string?
+        // todo : byte[] to stream?
         public byte[] GetFile(string fullPath)
         {
 
