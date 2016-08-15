@@ -9,13 +9,15 @@ namespace Server.ConsoleApp
     {
         static void Main(string[] args)
         {
+            Console.Title = "Server";
+
             Uri baseAddress = new Uri("http://localhost:8082/Server/");
 
             ServiceHost selfHost = new ServiceHost(typeof(Service.FileService), baseAddress);
 
             try
             {
-                selfHost.AddServiceEndpoint(typeof(IFileService), new WSHttpBinding(),  "Service");// change from ws to basic
+                selfHost.AddServiceEndpoint(typeof(IFileService), new WSHttpBinding(), "Service");
 
                 ServiceMetadataBehavior smb = new ServiceMetadataBehavior {HttpGetEnabled = true};
                 selfHost.Description.Behaviors.Add(smb);

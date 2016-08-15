@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Client.GUI
 {
@@ -38,12 +39,14 @@ namespace Client.GUI
             // which file currently dealing with 
             int selectedIndex = FilesListBox.SelectedIndex;
 
+
             FileServiceReference.CacheFileServiceClient client = new FileServiceReference.CacheFileServiceClient();
             byte[] b = client.GetFile(_fullServerPaths[selectedIndex]);        
 
             File.WriteAllBytes(System.IO.Path.Combine(ClientFilesLocation, _fileNames[selectedIndex]), b);
 
             client.Close();
+
         }
 
         private void DisplayContentsButton_Click(object sender, RoutedEventArgs e)
@@ -51,7 +54,16 @@ namespace Client.GUI
             int selectedIndex = FilesListBox.SelectedIndex;
             string file = System.IO.Path.Combine(ClientFilesLocation, _fileNames[selectedIndex]);
             // use windows default program to open file 
-            System.Diagnostics.Process.Start(file); // some exception handling todo 
+
+            try
+            {
+                System.Diagnostics.Process.Start(file); 
+            }
+            catch (Exception ex)
+            {
+                // todo 
+                System.Windows.Forms.MessageBox.Show("That file has not been downloaded yet");
+            }
         }
 
     }

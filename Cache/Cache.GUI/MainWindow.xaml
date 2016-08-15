@@ -16,9 +16,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Button x:Name="QueryFileNamesButton" Grid.Row="0" Content="Retrieve list of cached files" Click="QueryFileNamesButton_Click" Background="#FFD4E0FB"/>
+        <Button x:Name="QueryFileNamesButton" Grid.Row="0" Content="Retrieve list of cached files" Click="QueryFileNamesButton_Click" Background="#FF6EE862"/>
         <ListBox x:Name="FilesListBox" Grid.Row="1"/>
-        <Button x:Name="ClearCacheButton" Grid.Row="2" Content="Clear the contents of the cache" Click="ClearCacheButton_Click" Background="LightYellow"/>
-        <Button x:Name="ViewLogButton" Grid.Row="3" Content="View log" Background="#FFEBCBF5" Click="ViewLogButton_Click"/>
+        <Button x:Name="ClearCacheButton" Grid.Row="2" Content="Clear contents of the cache" Click="ClearCacheButton_Click" Background="#FFBA97DC"/>
+        <Button x:Name="ViewLogButton" Grid.Row="3" Content="View log" Background="#FF77D16F" Click="ViewLogButton_Click"/>
     </Grid>
 </Window>

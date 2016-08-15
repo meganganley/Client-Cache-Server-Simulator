@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -10,6 +11,7 @@ namespace Cache.GUI
     public partial class MainWindow : Window
     {
         private const string CacheFilesLocation = @"C:\Users\Megan\Documents\S2 2016\CS 711\CacheFiles";
+        private const string CacheLogFile = @"C:\Users\Megan\Documents\S2 2016\CS 711\log.txt";
 
         public MainWindow()
         {
@@ -27,9 +29,11 @@ namespace Cache.GUI
 
         private void ClearCacheButton_Click(object sender, RoutedEventArgs e)
         {
+            WriteToLog("cache cleared at " + DateTime.Now);
+
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(CacheFilesLocation);
             
-            foreach (System.IO.FileInfo file in dir.GetFiles()) file.Delete();
+            foreach (System.IO.FileInfo file in dir.GetFiles()) { file.Delete();}
             // need to handle nested dirs
             //  foreach (System.IO.DirectoryInfo subDirectory in dir.GetDirectories()) subDirectory.Delete(true);   
 
@@ -38,10 +42,17 @@ namespace Cache.GUI
 
         private void ViewLogButton_Click(object sender, RoutedEventArgs e)
         {
-            // todo : something
-//            int selectedIndex = FilesListBox.SelectedIndex;
-//            string file = System.IO.Path.Combine(ClientFilesLocation, fileNames[selectedIndex]);
-//            System.Diagnostics.Process.Start(file); // some exception handling todo 
+            System.Diagnostics.Process.Start(CacheLogFile);
         }
+
+        public void WriteToLog(string message)
+        {
+            using (System.IO.StreamWriter w = File.AppendText(CacheLogFile))
+            {
+                w.WriteLine(message);
+
+            }
+        }
+
     }
 }
