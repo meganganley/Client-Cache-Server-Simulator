@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
 
 namespace Server.Service
 {
@@ -38,6 +41,28 @@ namespace Server.Service
             }
            // return fs;
            */
+        }
+
+
+        public bool FileIsUpToDate(string fullPath, byte[] hash)
+        {
+            return hash.SequenceEqual(GetHashCode(fullPath));
+        }
+
+        static byte[] GetHashCode(string filePath)
+        {
+            using (var cryptoService = new MD5CryptoServiceProvider())
+            {
+                using (var fileStream = new FileStream(filePath,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.ReadWrite))
+                {
+                    var hash = cryptoService.ComputeHash(fileStream);
+                    var hashString = Convert.ToBase64String(hash);
+                    return hash;
+                }
+            }
         }
     }
 }

@@ -26,6 +26,12 @@ namespace Cache.ServerClient.FileServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/GetFile", ReplyAction="http://tempuri.org/IFileService/GetFileResponse")]
         System.Threading.Tasks.Task<byte[]> GetFileAsync(string filename);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/FileIsUpToDate", ReplyAction="http://tempuri.org/IFileService/FileIsUpToDateResponse")]
+        bool FileIsUpToDate(string filename, byte[] hash);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/FileIsUpToDate", ReplyAction="http://tempuri.org/IFileService/FileIsUpToDateResponse")]
+        System.Threading.Tasks.Task<bool> FileIsUpToDateAsync(string filename, byte[] hash);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -69,6 +75,14 @@ namespace Cache.ServerClient.FileServiceReference {
         
         public System.Threading.Tasks.Task<byte[]> GetFileAsync(string filename) {
             return base.Channel.GetFileAsync(filename);
+        }
+        
+        public bool FileIsUpToDate(string filename, byte[] hash) {
+            return base.Channel.FileIsUpToDate(filename, hash);
+        }
+        
+        public System.Threading.Tasks.Task<bool> FileIsUpToDateAsync(string filename, byte[] hash) {
+            return base.Channel.FileIsUpToDateAsync(filename, hash);
         }
     }
 }

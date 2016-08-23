@@ -11,6 +11,8 @@ namespace Server.Service
 
         [OperationContract]
         byte[] GetFile(string filename);
-        
+
+        [OperationContract]
+        bool FileIsUpToDate(string filename, byte[] hash);
     }
 }

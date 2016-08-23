@@ -15,6 +15,12 @@ namespace Cache.ServerClient
             FileServiceReference.FileServiceClient client = new FileServiceReference.FileServiceClient();
             return client.GetFileNames();
         }
+
+        public bool FileIsUpToDate(string path, byte[] hash)
+        {
+            FileServiceReference.FileServiceClient client = new FileServiceReference.FileServiceClient();
+            return client.FileIsUpToDate(path, hash);
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using Cache.ServerClient;
 
 namespace Cache.Service
@@ -21,33 +22,50 @@ namespace Cache.Service
             WriteToLog("response: list of files returned");
             return c.GetFileNames();
         }
-    
-        public byte[] GetFile(string path)
+
+        public byte[] GetFile(string serverPath)
         {
-            string file = Path.GetFileName(path);
+            string file = Path.GetFileName(serverPath);
 
             WriteToLog("user request: file " + file + " at " + DateTime.Now);
 
+            Client c = new Client();
+
             if (File.Exists(Path.Combine(CacheFilesLocation, file)))
             {
-                WriteToLog("response: cached file " + file);
+                if (c.FileIsUpToDate(serverPath, GetHashCode(Path.Combine(CacheFilesLocation, file))))
+                {
+                    WriteToLog("response: cached file " + file);
 
-                return File.ReadAllBytes(path);     // todo: breaks with nested dirs -- don't know if full path required here
+                    return File.ReadAllBytes(serverPath);     // todo: breaks with nested dirs -- don't know if full serverPath required here
+
+                }
+
+                WriteToLog("file " + file + " has an updated version available on server");
+
             }
-            else
+            byte[] b = c.GetFile(serverPath);
+            File.WriteAllBytes(System.IO.Path.Combine(CacheFilesLocation, file), b);
+
+            WriteToLog("response: file " + file + " downloaded from the server");
+
+            return b;
+        }
+
+        static byte[] GetHashCode(string filePath)
+        {
+            using (var cryptoService = new MD5CryptoServiceProvider())
             {
-                Client c = new Client();
-                byte[] b = c.GetFile(path);
-                File.WriteAllBytes(System.IO.Path.Combine(CacheFilesLocation, file), b);
-
-                WriteToLog("response: file " + file + " downloaded from the server");
-
-                return b;
+                using (var fileStream = new FileStream(filePath,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.ReadWrite))
+                {
+                    var hash = cryptoService.ComputeHash(fileStream);
+                    var hashString = Convert.ToBase64String(hash);
+                    return hash;
+                }
             }
-
-
-            // TODO: CHECK FILE NAME, IF IN CACHE RETURN. ELSE GET FROM SERVER SERVICEREFERENCE
-
         }
 
         public void WriteToLog(string message)
