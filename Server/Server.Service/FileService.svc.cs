@@ -21,14 +21,13 @@ namespace Server.Service
         // todo : byte[] to stream?
         public byte[] GetFile(string fullPath)
         {
-
             byte[] buff = File.ReadAllBytes(fullPath);
             return buff;
         }
         
         public bool FileIsUpToDate(string fullPath, byte[] hash)
         {
-            return hash.SequenceEqual(GetHashCode(fullPath));
+            return hash.SequenceEqual(GetFileHash(fullPath));
         }
 
         public IEnumerable<ChunkContent> GetModifiedChunks(string fullPath, List<ChunkHash> cacheChunkHashes)
@@ -48,17 +47,18 @@ namespace Server.Service
 
                 var newHash = serverChunkHashes[i];
 
-                for (int j = 0; j < cacheChunkHashes.Count; j++)
+                foreach (var oldHash in cacheChunkHashes)
                 {
-                    var oldHash = cacheChunkHashes[j];
                     if (oldHash.Hash.SequenceEqual(newHash.Hash))
                     {
+                        // hash functions match indicates that chunk content is same, no need to pass chunk again
+                        // but may need to update location/index of chunk within file on cache 
                         latestContent.Add(new ChunkContent
                         {
                             Content = null,
                             PreviousLocation = oldHash.Location,
                             UpdatedLocation = i,
-                            UseUpdatedChunk = false
+                            UseUpdatedChunk = false 
                         });
                         foundCachedChunk = true;
                         break;
@@ -67,12 +67,17 @@ namespace Server.Service
 
                 if (!foundCachedChunk)
                 {
-                    latestContent.Add(new ChunkContent { Content = chunks[i], PreviousLocation = -1, UpdatedLocation = i, UseUpdatedChunk = true });
+                    // found no matches, so chunk is modified and we should send the content to the cache  
+                    latestContent.Add(new ChunkContent
+                    {
+                        Content = chunks[i],
+                        PreviousLocation = -1,
+                        UpdatedLocation = i,
+                        UseUpdatedChunk = true
+                    });
 
                 }
-
             }
-
             return latestContent;
         }
 
@@ -93,9 +98,7 @@ namespace Server.Service
             return hashSet;
         }
 
-
-
-        static byte[] GetHashCode(string filePath)
+        static byte[] GetFileHash(string filePath)
         {
             using (var cryptoService = new MD5CryptoServiceProvider())
             {
@@ -105,7 +108,6 @@ namespace Server.Service
                     FileShare.ReadWrite))
                 {
                     var hash = cryptoService.ComputeHash(fileStream);
-                  //  var hashString = Convert.ToBase64String(hash);
                     return hash;
                 }
             }

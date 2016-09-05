@@ -17,7 +17,7 @@ namespace Cache.Service
             WriteToLog("user request: get list of files available on server at " + DateTime.Now);
 
             Client c = new Client();
-            WriteToLog("response: list of files returned");
+            WriteToLog("response: list of files returned\n");
             return c.GetFileNames();
         }
 
@@ -32,49 +32,67 @@ namespace Cache.Service
             
             if (File.Exists(Path.Combine(CacheFilesLocation, file)))
             {
-                // File exists and up-to-date, can return full cached file 
                 if (c.FileIsUpToDate(serverPath, GetFileHash(Path.Combine(CacheFilesLocation, file))))
                 {
-                    WriteToLog("response: cached file " + file);
-
-                    return File.ReadAllBytes(serverPath);     // todo: breaks with nested dirs -- don't know if full serverPath required here
-
+                    // File exists and up-to-date, can return full cached file 
+                    return GetFileFromCache(serverPath, file);
                 }
 
-                // File exists but is not up-to-date, get only required chunks from server
-                WriteToLog("file " + file + " has an updated version available on server");
+                /*  PART 2  */
 
-                // Generate chunks
-                byte[] outOfDateBytes = File.ReadAllBytes(Path.Combine(CacheFilesLocation, file));
-                List<byte[]> chunks = Common.RabinKarp.Slice(outOfDateBytes, 0x01FFF);
-
-                List<ChunkHash> hashSet = GenerateChunkHashSet(chunks);
-
-                // Send hashes of chunks to server
-                IEnumerable<ChunkContent> updatedContent = c.GetModifiedChunks(serverPath, hashSet);
-
-                // Receive required chunks
-
-                // Assemble full file
-                b =  AssembleFile(updatedContent, chunks);
-                // Return full file 
-
-                File.WriteAllBytes(System.IO.Path.Combine(CacheFilesLocation, file), b);
-
-                return b;
-
+                // there is an updated version of the file on the cache
+                // query for only relevant chunks 
+                return GetChunksFromServer(c, serverPath, file);
             }
+
             // File does not exist on cache, request from server
-            b = c.GetFile(serverPath);
+            return GetFileFromServer(c, serverPath, file);
+        }
+
+        public byte[] GetFileFromServer(Client c, string serverPath, string file)
+        {
+            byte[] b = c.GetFile(serverPath);
+
+            // save file to cache for future use
             File.WriteAllBytes(System.IO.Path.Combine(CacheFilesLocation, file), b);
 
-            WriteToLog("response: file " + file + " downloaded from the server");
+            WriteToLog("response: file " + file + " downloaded from the server\n");
 
             return b;
         }
 
+        public byte[] GetFileFromCache(string serverPath, string file)
+        {
+            WriteToLog("response: cached file " + file + "\n");
 
-        public byte[] AssembleFile(IEnumerable<ChunkContent> updatedContent, List<byte[]> cachedContent)
+            return File.ReadAllBytes(serverPath);     // todo: breaks with nested dirs -- don't know if full serverPath required here
+
+        }
+
+        public byte[] GetChunksFromServer(Client c, string serverPath, string file)
+        {
+            WriteToLog("file " + file + " has an updated version available on server");
+
+            // Generate old chunks
+            byte[] outOfDateBytes = File.ReadAllBytes(Path.Combine(CacheFilesLocation, file));
+            List<byte[]> chunks = Common.RabinKarp.Slice(outOfDateBytes, 0x01FFF);
+
+            List<ChunkHash> hashSet = GenerateChunkHashSet(chunks);
+
+            // Send hashes of chunks to server to compare to their hashes 
+            IEnumerable<ChunkContent> updatedContent = c.GetModifiedChunks(serverPath, hashSet);
+            
+            // Assemble full file
+            byte[] b = OrderChunks(updatedContent, chunks);
+
+            // save updated file to cache for future use, overwriting previous version
+            File.WriteAllBytes(System.IO.Path.Combine(CacheFilesLocation, file), b);
+
+            return b;
+        }
+        
+
+        public byte[] OrderChunks(IEnumerable<ChunkContent> updatedContent, List<byte[]> cachedContent)
         {
             List<byte[]> orderedBytes = new List<byte[]>();
 
@@ -82,6 +100,8 @@ namespace Cache.Service
             int serverChunksLength = 0;
             byte[] cachedChunk;
 
+
+            // We don't have any guarantees on order the chunks are received in
             foreach (ChunkContent chunk in updatedContent)
             {
                 if (chunk.UseUpdatedChunk)
@@ -98,11 +118,17 @@ namespace Cache.Service
             }
             int total = serverChunksLength + (int)cacheChunksLength;
             
-            WriteToLog("response: " + (int)(cacheChunksLength*100/total) + "% was constructed with cached data");
+            WriteToLog("response: " + (int)(cacheChunksLength*100/total) + "% was constructed with cached data\n");
 
-            byte[] final = new byte[total];
-            int count = 0; 
+            return AssembleChunks(orderedBytes, cachedContent, total);
+        }
 
+        public byte[] AssembleChunks(List<byte[]> orderedBytes, List<byte[]> cachedContent, int length)
+        {
+            byte[] final = new byte[length];
+            int count = 0;
+
+            // We have the correct order to arrange byte arrays in, now want to arrange in one large byte array
             foreach (byte[] chunk in orderedBytes)
             {
                 chunk.CopyTo(final, count);
@@ -110,12 +136,6 @@ namespace Cache.Service
             }
 
             return final;
-        }
-
-
-        public List<byte[]> OrderChunks(IEnumerable<ChunkContent> updatedContent, List<byte[]> cachedContent)
-        {
-            return null;
         }
 
 
