@@ -2,8 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Client.GUI
 {
@@ -11,8 +9,9 @@ namespace Client.GUI
     {
         private const string ClientFilesLocation = @"C:\Users\Megan\Documents\S2 2016\CS 711\ClientFiles"; //todo
 
-        private string[] _fullServerPaths = {};                 // TODO: FIX
-        private string[] _fileNames = {};
+        private string[] _fullServerPaths = { };                 // TODO: FIX
+        private string[] _fileNames = { };
+        private string[] _fileStatuses = { };
 
         public MainWindow()
         {
@@ -22,7 +21,7 @@ namespace Client.GUI
         private void QueryFileNamesButton_Click(object sender, RoutedEventArgs e)
         {
             FileServiceReference.CacheFileServiceClient client = new FileServiceReference.CacheFileServiceClient();
-            
+
             // want to preserve full path name in case of nested directories
             _fullServerPaths = client.GetFileNames();
 
@@ -31,33 +30,58 @@ namespace Client.GUI
 
             FilesListBox.ItemsSource = _fileNames;
 
-            client.Close(); 
+            _fileStatuses = new string[_fileNames.Length];
+
+            for (int i = 0; i < _fileStatuses.Length; i++)
+            {
+                _fileStatuses[i] = "downloaded";
+            }
+
+
+            client.Close();
         }
 
-        private void DownloadFilesButton_Click(object sender, RoutedEventArgs e)
+        private void DownloadFileButton_Click(object sender, RoutedEventArgs e)
         {
             // which file currently dealing with 
             int selectedIndex = FilesListBox.SelectedIndex;
 
+            if (selectedIndex == -1)
+            {
+                return;
+            }
+            _fileStatuses[selectedIndex] = "Downloading...";
+            //         FilesDownloadedItemsControl.ItemsSource = _fileStatuses;     // todo fix
+
 
             FileServiceReference.CacheFileServiceClient client = new FileServiceReference.CacheFileServiceClient();
-            byte[] b = client.GetFile(_fullServerPaths[selectedIndex]);        
+            byte[] b = client.GetFile(_fullServerPaths[selectedIndex]);
 
             File.WriteAllBytes(System.IO.Path.Combine(ClientFilesLocation, _fileNames[selectedIndex]), b);
 
             client.Close();
+
+            _fileStatuses[selectedIndex] = "Downloaded";
+            //          FilesDownloadedItemsControl.ItemsSource = _fileStatuses;
+
 
         }
 
         private void DisplayContentsButton_Click(object sender, RoutedEventArgs e)
         {
             int selectedIndex = FilesListBox.SelectedIndex;
-            string file = System.IO.Path.Combine(ClientFilesLocation, _fileNames[selectedIndex]);
-            // use windows default program to open file 
 
+            if (selectedIndex == -1)
+            {
+                return;
+            }
+
+            string file = System.IO.Path.Combine(ClientFilesLocation, _fileNames[selectedIndex]);
+            
+            // use windows default program to open file 
             try
             {
-                System.Diagnostics.Process.Start(file); 
+                System.Diagnostics.Process.Start(file);
             }
             catch (Exception ex)
             {

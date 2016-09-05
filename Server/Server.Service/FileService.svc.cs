@@ -24,30 +24,76 @@ namespace Server.Service
 
             byte[] buff = File.ReadAllBytes(fullPath);
             return buff;
-            /*
-          //  FileStream fs = new FileStream(fullPath, FileMode.Open);
-            try
-            {
-                FileStream imageFile = File.OpenRead(fullPath);
-                return imageFile;
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine(
-                    String.Format("An exception was thrown while trying to open file {0}", fullPath));
-                Console.WriteLine("Exception is: ");
-                Console.WriteLine(ex.ToString());
-                throw ex;
-            }
-           // return fs;
-           */
         }
-
-
+        
         public bool FileIsUpToDate(string fullPath, byte[] hash)
         {
             return hash.SequenceEqual(GetHashCode(fullPath));
         }
+
+        public IEnumerable<ChunkContent> GetModifiedChunks(string fullPath, List<ChunkHash> cacheChunkHashes)
+        {
+            byte[] b = File.ReadAllBytes(fullPath);
+            List<byte[]> chunks = Common.RabinKarp.Slice(b, 0x01FFF);
+
+            List<ChunkHash> serverChunkHashes = GenerateChunkHashSet(chunks);
+            
+            List<ChunkContent> latestContent = new List<ChunkContent>();
+
+            bool foundCachedChunk = false;
+
+            for (int i = 0; i < serverChunkHashes.Count; i++)
+            {
+                foundCachedChunk = false;
+
+                var newHash = serverChunkHashes[i];
+
+                for (int j = 0; j < cacheChunkHashes.Count; j++)
+                {
+                    var oldHash = cacheChunkHashes[j];
+                    if (oldHash.Hash.SequenceEqual(newHash.Hash))
+                    {
+                        latestContent.Add(new ChunkContent
+                        {
+                            Content = null,
+                            PreviousLocation = oldHash.Location,
+                            UpdatedLocation = i,
+                            UseUpdatedChunk = false
+                        });
+                        foundCachedChunk = true;
+                        break;
+                    }
+                }
+
+                if (!foundCachedChunk)
+                {
+                    latestContent.Add(new ChunkContent { Content = chunks[i], PreviousLocation = -1, UpdatedLocation = i, UseUpdatedChunk = true });
+
+                }
+
+            }
+
+            return latestContent;
+        }
+
+        public List<ChunkHash> GenerateChunkHashSet(List<byte[]> chunks)
+        {
+            List<ChunkHash> hashSet = new List<ChunkHash>();
+            
+            using (var cryptoService = new MD5CryptoServiceProvider())
+            {
+                for (int index = 0; index < chunks.Count; index++)
+                {
+                    byte[] chunk = chunks[index];
+                    var hash = cryptoService.ComputeHash(chunk);
+                    hashSet.Add(new ChunkHash {Hash = hash, Location = index});
+                }
+            }
+            
+            return hashSet;
+        }
+
+
 
         static byte[] GetHashCode(string filePath)
         {
@@ -59,7 +105,7 @@ namespace Server.Service
                     FileShare.ReadWrite))
                 {
                     var hash = cryptoService.ComputeHash(fileStream);
-                    var hashString = Convert.ToBase64String(hash);
+                  //  var hashString = Convert.ToBase64String(hash);
                     return hash;
                 }
             }

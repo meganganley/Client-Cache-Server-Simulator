@@ -9,7 +9,163 @@
 //------------------------------------------------------------------------------
 
 namespace Cache.ServerClient.FileServiceReference {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ChunkHash", Namespace="http://schemas.datacontract.org/2004/07/Server.Service")]
+    [System.SerializableAttribute()]
+    public partial class ChunkHash : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] HashField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int LocationField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] Hash {
+            get {
+                return this.HashField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HashField, value) != true)) {
+                    this.HashField = value;
+                    this.RaisePropertyChanged("Hash");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((this.LocationField.Equals(value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ChunkContent", Namespace="http://schemas.datacontract.org/2004/07/Server.Service")]
+    [System.SerializableAttribute()]
+    public partial class ChunkContent : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] ContentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PreviousLocationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int UpdatedLocationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool UseUpdatedChunkField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] Content {
+            get {
+                return this.ContentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContentField, value) != true)) {
+                    this.ContentField = value;
+                    this.RaisePropertyChanged("Content");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PreviousLocation {
+            get {
+                return this.PreviousLocationField;
+            }
+            set {
+                if ((this.PreviousLocationField.Equals(value) != true)) {
+                    this.PreviousLocationField = value;
+                    this.RaisePropertyChanged("PreviousLocation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int UpdatedLocation {
+            get {
+                return this.UpdatedLocationField;
+            }
+            set {
+                if ((this.UpdatedLocationField.Equals(value) != true)) {
+                    this.UpdatedLocationField = value;
+                    this.RaisePropertyChanged("UpdatedLocation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool UseUpdatedChunk {
+            get {
+                return this.UseUpdatedChunkField;
+            }
+            set {
+                if ((this.UseUpdatedChunkField.Equals(value) != true)) {
+                    this.UseUpdatedChunkField = value;
+                    this.RaisePropertyChanged("UseUpdatedChunk");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="FileServiceReference.IFileService")]
@@ -32,6 +188,12 @@ namespace Cache.ServerClient.FileServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/FileIsUpToDate", ReplyAction="http://tempuri.org/IFileService/FileIsUpToDateResponse")]
         System.Threading.Tasks.Task<bool> FileIsUpToDateAsync(string filename, byte[] hash);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/GetModifiedChunks", ReplyAction="http://tempuri.org/IFileService/GetModifiedChunksResponse")]
+        Cache.ServerClient.FileServiceReference.ChunkContent[] GetModifiedChunks(string fullPath, Cache.ServerClient.FileServiceReference.ChunkHash[] cacheChunkHashes);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileService/GetModifiedChunks", ReplyAction="http://tempuri.org/IFileService/GetModifiedChunksResponse")]
+        System.Threading.Tasks.Task<Cache.ServerClient.FileServiceReference.ChunkContent[]> GetModifiedChunksAsync(string fullPath, Cache.ServerClient.FileServiceReference.ChunkHash[] cacheChunkHashes);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -83,6 +245,14 @@ namespace Cache.ServerClient.FileServiceReference {
         
         public System.Threading.Tasks.Task<bool> FileIsUpToDateAsync(string filename, byte[] hash) {
             return base.Channel.FileIsUpToDateAsync(filename, hash);
+        }
+        
+        public Cache.ServerClient.FileServiceReference.ChunkContent[] GetModifiedChunks(string fullPath, Cache.ServerClient.FileServiceReference.ChunkHash[] cacheChunkHashes) {
+            return base.Channel.GetModifiedChunks(fullPath, cacheChunkHashes);
+        }
+        
+        public System.Threading.Tasks.Task<Cache.ServerClient.FileServiceReference.ChunkContent[]> GetModifiedChunksAsync(string fullPath, Cache.ServerClient.FileServiceReference.ChunkHash[] cacheChunkHashes) {
+            return base.Channel.GetModifiedChunksAsync(fullPath, cacheChunkHashes);
         }
     }
 }

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cache.ServerClient", "Cache
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cache.GUI", "Cache.GUI\Cache.GUI.csproj", "{7F0A8381-1260-4867-BEEE-8D0A551C47A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{1CD1148D-D510-4BC9-BAE9-040D9E398217}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{7F0A8381-1260-4867-BEEE-8D0A551C47A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F0A8381-1260-4867-BEEE-8D0A551C47A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F0A8381-1260-4867-BEEE-8D0A551C47A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CD1148D-D510-4BC9-BAE9-040D9E398217}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CD1148D-D510-4BC9-BAE9-040D9E398217}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CD1148D-D510-4BC9-BAE9-040D9E398217}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CD1148D-D510-4BC9-BAE9-040D9E398217}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -88,6 +88,10 @@
       <Project>{a4b5ea8d-3ff8-4797-8da3-da0ff919fa80}</Project>
       <Name>Cache.ServerClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{1cd1148d-d510-4bc9-bae9-040d9e398217}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -55,6 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Service References\FileServiceReference\Cache.ServerClient.FileServiceReference.ChunkContent.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\FileServiceReference\FileService.wsdl" />
     <None Include="Service References\FileServiceReference\item.xsd">
       <SubType>Designer</SubType>
@@ -79,6 +82,9 @@
     <None Include="Service References\FileServiceReference\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\FileServiceReference\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\FileServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

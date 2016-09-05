@@ -5,21 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client.GUI"
         mc:Ignorable="d"
-        Title="Client" Height="400" Width="350" ResizeMode="NoResize">
+        Title="Client" Height="400" Width="350">
 
-    <Grid Margin = "10, 5, 10, 20">
+    <Grid Margin = "10, 5, 10, 20" ShowGridLines="False">
         
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Button x:Name="QueryFileNamesButton" Grid.Row="0" Content="Retrieve list of available files" Click="QueryFileNamesButton_Click" Background="#FFD4E0FB"/>
-        <ListBox x:Name="FilesListBox" Grid.Row="1"/>
-        <Button x:Name="DownloadFilesButton" Grid.Row="2" Content="Download selected file" Click="DownloadFilesButton_Click" Background="LightYellow"/>
-        <Button x:Name="DisplayContentsButton" Grid.Row="3" Content="Display contents of selected file" Background="#FFEBCBF5" Click="DisplayContentsButton_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="QueryFileNamesButton" Grid.Row="0" Grid.ColumnSpan="2" Content="Retrieve list of available files" Click="QueryFileNamesButton_Click" Background="#FFD4E0FB"/>
+        <ListBox x:Name="FilesListBox" Grid.Row="2"/>
+        <Button x:Name="DownloadFilesButton" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Download selected file" Click="DownloadFileButton_Click" Background="LightYellow"/>
+        <Button x:Name="DisplayContentsButton" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Display contents of selected file" Background="#FFEBCBF5" Click="DisplayContentsButton_Click"/>
+
+        <ListView Margin="5" Grid.Row="1" Grid.Column="0" BorderThickness="0" >
+            <ListViewItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Blue</TextBlock>
+                    <Image Source="Resources/CheckBox_669.png" Margin="0,0,5,0" />
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Red</TextBlock>
+                    <Image Source="Resources/CheckBox_669.png" Margin="0,0,5,0"/>
+                </StackPanel>
+            </ListViewItem>
+        </ListView>
+
+
     </Grid>
             <!--
  ResizeMode="NoResize"

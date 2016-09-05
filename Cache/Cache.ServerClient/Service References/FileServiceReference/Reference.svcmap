@@ -23,10 +23,11 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="item.disco" MetadataType="Disco" ID="7eec416b-e888-474d-9098-53c8964abe20" SourceId="1" SourceUrl="http://localhost:8082/Server/?disco" />
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="f63fbf45-e73b-42f2-bde4-191910a04be2" SourceId="1" SourceUrl="http://localhost:8082/Server/?xsd=xsd2" />
-    <MetadataFile FileName="FileService.wsdl" MetadataType="Wsdl" ID="10ccad85-cad7-4fd6-b4f4-22859451db20" SourceId="1" SourceUrl="http://localhost:8082/Server/?wsdl" />
     <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="8cec9271-4210-4831-8530-81a44de7a59f" SourceId="1" SourceUrl="http://localhost:8082/Server/?xsd=xsd0" />
     <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="93d5c010-0d1b-41ec-b120-91fad0842264" SourceId="1" SourceUrl="http://localhost:8082/Server/?xsd=xsd1" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="f63fbf45-e73b-42f2-bde4-191910a04be2" SourceId="1" SourceUrl="http://localhost:8082/Server/?xsd=xsd2" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="a3a6378a-a92c-4d2b-b75b-005ef65d0276" SourceId="1" SourceUrl="http://localhost:8082/Server/?xsd=xsd3" />
+    <MetadataFile FileName="FileService.wsdl" MetadataType="Wsdl" ID="10ccad85-cad7-4fd6-b4f4-22859451db20" SourceId="1" SourceUrl="http://localhost:8082/Server/?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
