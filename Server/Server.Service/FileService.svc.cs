@@ -8,7 +8,12 @@ namespace Server.Service
 {
     public class FileService : IFileService
     {
-        // private static readonly string ServerFilesLocation = Path.Combine(Environment.CurrentDirectory, @"ServerFiles");
+    //     private static readonly string ServerFilesLocation = Path.Combine(Environment.CurrentDirectory, @"ServerFiles");
+    //    static readonly string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        
+  //      string folder = Path.Combine(desktopPath, @"Server Files");
+
+      //  Directory.CreateDirectory(folder);
 
         private const string ServerFilesLocation = @"C:\Users\Megan\Documents\S2 2016\CS 711\ServerFiles";
 

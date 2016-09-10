@@ -59,6 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FileDisplayed.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service References\FileServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

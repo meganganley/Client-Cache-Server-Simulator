@@ -6,11 +6,13 @@
         xmlns:local="clr-namespace:Client.GUI"
         mc:Ignorable="d"
         Title="Client" Height="400" Width="350">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
 
     <Grid Margin = "10, 5, 10, 20" ShowGridLines="False">
-        
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -23,47 +25,19 @@
         </Grid.ColumnDefinitions>
 
         <Button x:Name="QueryFileNamesButton" Grid.Row="0" Grid.ColumnSpan="2" Content="Retrieve list of available files" Click="QueryFileNamesButton_Click" Background="#FFD4E0FB"/>
-        <ListBox x:Name="FilesListBox" Grid.Row="2"/>
-        <Button x:Name="DownloadFilesButton" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Download selected file" Click="DownloadFileButton_Click" Background="LightYellow"/>
-        <Button x:Name="DisplayContentsButton" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Display contents of selected file" Background="#FFEBCBF5" Click="DisplayContentsButton_Click"/>
 
-        <ListView Margin="5" Grid.Row="1" Grid.Column="0" BorderThickness="0" >
-            <ListViewItem>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Blue</TextBlock>
-                    <Image Source="Resources/CheckBox_669.png" Margin="0,0,5,0" />
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Red</TextBlock>
-                    <Image Source="Resources/CheckBox_669.png" Margin="0,0,5,0"/>
-                </StackPanel>
-            </ListViewItem>
-        </ListView>
+        <ListBox Name="FilesListBox" Margin="5" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.Column="0" BorderThickness="0" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" ItemsSource="{Binding ListOfFilesToDisplay, Mode= OneWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel HorizontalAlignment="Stretch">
+                        <TextBlock Margin="5,0,0,0" DockPanel.Dock="Right" HorizontalAlignment="Right" Text="{Binding Status, Mode=OneWay}" />
+                        <TextBlock DockPanel.Dock="Left" HorizontalAlignment="Left"  Text="{Binding Filename, Mode=OneWay}" />
+                    </DockPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-
+        <Button x:Name="DownloadFilesButton" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Download selected file" Click="DownloadFileButton_Click" Background="LightYellow"/>
+        <Button x:Name="DisplayContentsButton" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Display contents of selected file" Background="#FFEBCBF5" Click="DisplayContentsButton_Click"/>
     </Grid>
-            <!--
- ResizeMode="NoResize"
-    <Grid HorizontalAlignment="Center" Margin="0,24,0,109">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Button x:Name="QueryFileNamesButton"  Content="Get filenames" HorizontalAlignment="Center" VerticalAlignment="Top" Width="168" Click="QueryFileNamesButton_Click" Height="20" Margin="82,10,94,0"/>
-        <ListBox x:Name="FilesListBox"  Grid.Row="1" HorizontalAlignment="Left" Margin="30,30,0,85" Width="416" SelectionChanged="FilesListBox_SelectionChanged"/>
-        <Button x:Name="DownloadFilesButton"  Grid.Row="2" Content="Download file" HorizontalAlignment="Left" Margin="30,96,0,0" VerticalAlignment="Top" Width="167" Click="DownloadFilesButton_Click" Height="21"/>
-        <Button x:Name="DisplayContentsButton" Content="Display contents of file" Grid.Row="3" HorizontalAlignment="Left" Margin="30,133,0,0" VerticalAlignment="Top" Width="167" Height="20"/>
-
-    </Grid>
-
--->
-
-    
 </Window>

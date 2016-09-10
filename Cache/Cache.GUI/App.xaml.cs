@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Windows;
@@ -15,6 +16,8 @@ namespace Cache.GUI
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            SetUpDirectory("Cache Files");
+
             Uri baseAddress = new Uri("http://localhost:8081/Cache/");    
 
             _selfHost = new ServiceHost(typeof(CacheFileService), baseAddress);
@@ -39,6 +42,16 @@ namespace Cache.GUI
         protected override void OnExit(ExitEventArgs e)
         {
             _selfHost.Close();
+        }
+
+
+        public static void SetUpDirectory(string directoryName)
+        {
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            string directoryPath = Path.Combine(desktopPath, directoryName);
+
+            Directory.CreateDirectory(directoryPath);
         }
     }
 }
