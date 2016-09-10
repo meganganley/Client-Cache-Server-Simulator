@@ -42,16 +42,18 @@ namespace Cache.Service
 
                 // there is an updated version of the file on the cache
                 // query for only relevant chunks 
-                return GetChunksFromServer(c, serverPath, file);
+            //    return GetChunksFromServer(c, serverPath, file);
             }
 
-            // File does not exist on cache, request from server
+            // File does not exist on cache, or update available in Part 1 - request from server
             return GetFileFromServer(c, serverPath, file);
         }
 
         public byte[] GetFileFromServer(Client c, string serverPath, string file)
         {
             byte[] b = c.GetFile(serverPath);
+
+            WriteToLog("Cache received file at " + DateTime.Now.ToString("hh.mm.ss.ffffff"));
 
             // save file to cache for future use
             File.WriteAllBytes(System.IO.Path.Combine(CacheFilesLocation, file), b);
@@ -81,10 +83,13 @@ namespace Cache.Service
 
             // Send hashes of chunks to server to compare to their hashes 
             IEnumerable<ChunkContent> updatedContent = c.GetModifiedChunks(serverPath, hashSet);
-            
+
+            WriteToLog("Cache received chunks at " + DateTime.Now.ToString("hh.mm.ss.ffffff"));
+
+
             // Assemble full file
             byte[] b = OrderChunks(updatedContent, chunks);
-
+            
             // save updated file to cache for future use, overwriting previous version
             File.WriteAllBytes(System.IO.Path.Combine(CacheFilesLocation, file), b);
 
@@ -143,7 +148,7 @@ namespace Cache.Service
         {
             List<ChunkHash> hashSet = new List<ChunkHash>();
 
-            using (var cryptoService = new MD5CryptoServiceProvider())
+            using (var cryptoService = new SHA256CryptoServiceProvider())
             {
                 for (int index = 0; index < chunks.Count; index++)
                 {
@@ -160,7 +165,7 @@ namespace Cache.Service
 
         static byte[] GetFileHash(string filePath)
         {
-            using (var cryptoService = new MD5CryptoServiceProvider())
+            using (var cryptoService = new SHA256CryptoServiceProvider())
             {
                 using (var fileStream = new FileStream(filePath,
                     FileMode.Open,

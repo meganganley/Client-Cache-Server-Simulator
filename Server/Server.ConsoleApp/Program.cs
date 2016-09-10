@@ -32,8 +32,8 @@ namespace Server.ConsoleApp
                 Console.WriteLine("Press <ENTER> to terminate service.");
                 Console.WriteLine();
 
-           //     string fullPath = @"C:\Users\Megan\Documents\S2 2016\CS 711\ServerFiles\wiki.txt";
-            //    TestAlg(fullPath);
+                string fullPath = @"C:\Users\Megan\Desktop\711 Files - Megan Ganley\ServerFiles\cute-golden-retriever-happy-puppies EDITS.jpg";
+                PerformancMetrics(fullPath);
 
                 Console.ReadLine();
 
@@ -58,7 +58,7 @@ namespace Server.ConsoleApp
             Directory.CreateDirectory(childDirectoryPath);
         }
 
-        public static void TestAlg(string fullPath)
+        public static void PerformancMetrics(string fullPath)
         {
             byte[] b = File.ReadAllBytes(fullPath);
             List<byte[]> chunks = Common.RabinKarp.Slice(b, 0x01FFF);
@@ -69,9 +69,7 @@ namespace Server.ConsoleApp
             double average = chunks.Average(x => x.Length);
             Console.WriteLine("Average size of chunk: " + average);
             Console.WriteLine("Number of chunks: " + chunks.Count);
-
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            Console.WriteLine(path);
+            
             Console.ReadLine();
         }
 

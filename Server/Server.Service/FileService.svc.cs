@@ -17,6 +17,8 @@ namespace Server.Service
 
         private readonly string ServerFilesLocation =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "ServerFiles");
+        private readonly string PerformanceFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "log.txt");
+
 
         public IEnumerable<string> GetFileNames()
         {
@@ -28,6 +30,8 @@ namespace Server.Service
         public byte[] GetFile(string fullPath)
         {
             byte[] buff = File.ReadAllBytes(fullPath);
+
+            LogPerformance("Server sent file at " + DateTime.Now.ToString("hh.mm.ss.ffffff"));
             return buff;
         }
         
@@ -84,6 +88,8 @@ namespace Server.Service
 
                 }
             }
+            LogPerformance("Server sent chunks at " + DateTime.Now.ToString("hh.mm.ss.ffffff"));
+
             return latestContent;
         }
 
@@ -91,7 +97,7 @@ namespace Server.Service
         {
             List<ChunkHash> hashSet = new List<ChunkHash>();
             
-            using (var cryptoService = new MD5CryptoServiceProvider())
+            using (var cryptoService = new SHA256CryptoServiceProvider())
             {
                 for (int index = 0; index < chunks.Count; index++)
                 {
@@ -106,7 +112,7 @@ namespace Server.Service
 
         static byte[] GetFileHash(string filePath)
         {
-            using (var cryptoService = new MD5CryptoServiceProvider())
+            using (var cryptoService = new SHA256CryptoServiceProvider())
             {
                 using (var fileStream = new FileStream(filePath,
                     FileMode.Open,
@@ -116,6 +122,15 @@ namespace Server.Service
                     var hash = cryptoService.ComputeHash(fileStream);
                     return hash;
                 }
+            }
+        }
+
+        public void LogPerformance(string message)
+        {
+            using (System.IO.StreamWriter w = File.AppendText(PerformanceFile))
+            {
+                w.WriteLine(message);
+
             }
         }
     }
