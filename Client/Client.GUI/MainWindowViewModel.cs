@@ -11,7 +11,8 @@ namespace Client.GUI
 {
     class MainWindowViewModel : INotifyPropertyChanged
     {
-        private const string ClientFilesLocation = @"C:\Users\Megan\Documents\S2 2016\CS 711\ClientFiles"; //todo
+        private readonly string ClientFilesLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "ClientFiles");
+
         private string[] _fullServerPaths = { };                 // TODO: FIX
         private string[] _fileNames = { };
 
@@ -41,6 +42,7 @@ namespace Client.GUI
                 {
                     ListOfFilesToDisplay.Add(new FileDisplayed { Filename = file, Status = string.Empty });
                 }
+                // update ui
                 NotifyPropertyChanged(nameof(ListOfFilesToDisplay));
 
             }
@@ -53,6 +55,7 @@ namespace Client.GUI
                 return;
             }
 
+            // alert user that download is in progress
             ListOfFilesToDisplay[SelectedIndex].Status = "Downloading...";
 
             using (var client = new FileServiceReference.CacheFileServiceClient())
@@ -62,6 +65,7 @@ namespace Client.GUI
                 File.WriteAllBytes(System.IO.Path.Combine(ClientFilesLocation, _fileNames[SelectedIndex]), b);
 
             }
+            // alert user that file has been downloaded
             ListOfFilesToDisplay[SelectedIndex].Status = "Downloaded";
 
         }
@@ -82,6 +86,7 @@ namespace Client.GUI
             }
             catch (Exception ex)
             {
+                // file must have been deleted from client side or equivalent -- update ui to our best knowledge of situation
                 ListOfFilesToDisplay[SelectedIndex].Status = String.Empty;
                 System.Windows.Forms.MessageBox.Show("That file has not been downloaded yet");
             }

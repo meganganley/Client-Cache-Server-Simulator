@@ -16,7 +16,7 @@ namespace Cache.GUI
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            SetUpDirectory("Cache Files");
+            SetUpDirectory("CacheFiles");
 
             Uri baseAddress = new Uri("http://localhost:8081/Cache/");    
 
@@ -44,14 +44,15 @@ namespace Cache.GUI
             _selfHost.Close();
         }
 
-
         public static void SetUpDirectory(string directoryName)
         {
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            string directoryPath = Path.Combine(desktopPath, directoryName);
+            string parentDirectoryPath = Path.Combine(desktopPath, "711 Files - Megan Ganley");
+            Directory.CreateDirectory(parentDirectoryPath);
 
-            Directory.CreateDirectory(directoryPath);
+            string childDirectoryPath = Path.Combine(parentDirectoryPath, directoryName);
+            Directory.CreateDirectory(childDirectoryPath);
         }
     }
 }

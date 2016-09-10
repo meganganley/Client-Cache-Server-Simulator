@@ -11,16 +11,18 @@ namespace Client.GUI
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            SetUpDirectory("Client Files");
+            SetUpDirectory("ClientFiles");
         }
 
         public static void SetUpDirectory(string directoryName)
         {
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            string directoryPath = Path.Combine(desktopPath, directoryName);
+            string parentDirectoryPath = Path.Combine(desktopPath, "711 Files - Megan Ganley");
+            Directory.CreateDirectory(parentDirectoryPath);
 
-            Directory.CreateDirectory(directoryPath);
+            string childDirectoryPath = Path.Combine(parentDirectoryPath, directoryName);
+            Directory.CreateDirectory(childDirectoryPath);
         }
     }
 }

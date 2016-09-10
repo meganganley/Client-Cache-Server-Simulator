@@ -10,8 +10,8 @@ namespace Cache.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string CacheFilesLocation = @"C:\Users\Megan\Documents\S2 2016\CS 711\CacheFiles";
-        private const string CacheLogFile = @"C:\Users\Megan\Documents\S2 2016\CS 711\log.txt";
+        private readonly string CacheFilesLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "CacheFiles");
+        private readonly string CacheLogFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "log.txt");
 
         public MainWindow()
         {

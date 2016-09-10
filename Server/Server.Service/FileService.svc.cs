@@ -15,7 +15,8 @@ namespace Server.Service
 
       //  Directory.CreateDirectory(folder);
 
-        private const string ServerFilesLocation = @"C:\Users\Megan\Documents\S2 2016\CS 711\ServerFiles";
+        private readonly string ServerFilesLocation =
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "ServerFiles");
 
         public IEnumerable<string> GetFileNames()
         {

@@ -7,11 +7,12 @@ namespace Common
     {
         public static List<byte[]> Slice(byte[] b, ulong mask)
         {
-            // mask of 13 bits will give approximately 8k byte chunks
+            // mask of 13 bits will give approximately 8192 byte chunks
             List<byte[]> chunks = new List<byte[]>();
 
             // magic numbers
-            ulong Q = 1000007;
+            // Q - large prime number 
+            ulong Q = 10000007;
             ulong D = 512;
 
             int windowSize = 48;
