@@ -32,8 +32,8 @@ namespace Server.ConsoleApp
                 Console.WriteLine("Press <ENTER> to terminate service.");
                 Console.WriteLine();
 
-                string fullPath = @"C:\Users\Megan\Desktop\711 Files - Megan Ganley\ServerFiles\cute-golden-retriever-happy-puppies EDITS.jpg";
-                PerformancMetrics(fullPath);
+              //  string fullPath = @"C:\Users\Megan\Desktop\711 Files - Megan Ganley\ServerFiles\cute-golden-retriever-happy-puppies EDITS.jpg";
+           //     PerformanceMetrics(fullPath);
 
                 Console.ReadLine();
 
@@ -58,11 +58,11 @@ namespace Server.ConsoleApp
             Directory.CreateDirectory(childDirectoryPath);
         }
 
-        public static void PerformancMetrics(string fullPath)
+        public static void PerformanceMetrics(string fullPath)
         {
             byte[] b = File.ReadAllBytes(fullPath);
-            List<byte[]> chunks = Common.RabinKarp.Slice(b, 0x01FFF);
-            //    List<byte[]> chunks = Common.RabinKarp.Slice(b, 0x03FF);
+            List<byte[]> chunks = Common.RabinKarp.Slice(b);
+            //    List<byte[]> chunks = Common.RabinKarp.Slice(b);
 
 
             Console.WriteLine("Size of first chunk: " + chunks[0].Length);

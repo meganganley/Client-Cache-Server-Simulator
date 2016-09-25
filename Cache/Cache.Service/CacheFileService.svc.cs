@@ -11,6 +11,7 @@ namespace Cache.Service
     {
         private readonly string CacheFilesLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "CacheFiles");
         private readonly string CacheLogFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "log.txt");
+        private readonly string PerformanceFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "performance.txt");
 
         public IEnumerable<string> GetFileNames()
         {
@@ -42,7 +43,7 @@ namespace Cache.Service
 
                 // there is an updated version of the file on the cache
                 // query for only relevant chunks 
-            //    return GetChunksFromServer(c, serverPath, file);
+                return GetChunksFromServer(c, serverPath, file);
             }
 
             // File does not exist on cache, or update available in Part 1 - request from server
@@ -52,8 +53,6 @@ namespace Cache.Service
         public byte[] GetFileFromServer(Client c, string serverPath, string file)
         {
             byte[] b = c.GetFile(serverPath);
-
-            WriteToLog("Cache received file at " + DateTime.Now.ToString("hh.mm.ss.ffffff"));
 
             // save file to cache for future use
             File.WriteAllBytes(System.IO.Path.Combine(CacheFilesLocation, file), b);
@@ -77,19 +76,16 @@ namespace Cache.Service
 
             // Generate old chunks
             byte[] outOfDateBytes = File.ReadAllBytes(Path.Combine(CacheFilesLocation, file));
-            List<byte[]> chunks = Common.RabinKarp.Slice(outOfDateBytes, 0x01FFF);
+            List<byte[]> chunks = Common.RabinKarp.Slice(outOfDateBytes);
 
             List<ChunkHash> hashSet = GenerateChunkHashSet(chunks);
 
             // Send hashes of chunks to server to compare to their hashes 
             IEnumerable<ChunkContent> updatedContent = c.GetModifiedChunks(serverPath, hashSet);
-
-            WriteToLog("Cache received chunks at " + DateTime.Now.ToString("hh.mm.ss.ffffff"));
-
-
+  
             // Assemble full file
             byte[] b = OrderChunks(updatedContent, chunks);
-            
+
             // save updated file to cache for future use, overwriting previous version
             File.WriteAllBytes(System.IO.Path.Combine(CacheFilesLocation, file), b);
 
@@ -182,6 +178,16 @@ namespace Cache.Service
         public void WriteToLog(string message)
         {
             using (System.IO.StreamWriter w = File.AppendText(CacheLogFile))
+            {
+                w.WriteLine(message);
+
+            }
+        }
+
+
+        public void LogPerformance(string message)
+        {
+            using (System.IO.StreamWriter w = File.AppendText(PerformanceFile))
             {
                 w.WriteLine(message);
 

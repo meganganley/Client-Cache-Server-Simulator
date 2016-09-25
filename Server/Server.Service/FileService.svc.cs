@@ -17,7 +17,7 @@ namespace Server.Service
 
         private readonly string ServerFilesLocation =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "ServerFiles");
-        private readonly string PerformanceFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "log.txt");
+        private readonly string PerformanceFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "performance.txt");
 
 
         public IEnumerable<string> GetFileNames()
@@ -31,7 +31,6 @@ namespace Server.Service
         {
             byte[] buff = File.ReadAllBytes(fullPath);
 
-            LogPerformance("Server sent file at " + DateTime.Now.ToString("hh.mm.ss.ffffff"));
             return buff;
         }
         
@@ -43,10 +42,10 @@ namespace Server.Service
         public IEnumerable<ChunkContent> GetModifiedChunks(string fullPath, List<ChunkHash> cacheChunkHashes)
         {
             byte[] b = File.ReadAllBytes(fullPath);
-            List<byte[]> chunks = Common.RabinKarp.Slice(b, 0x01FFF);
+            List<byte[]> chunks = Common.RabinKarp.Slice(b);
 
             List<ChunkHash> serverChunkHashes = GenerateChunkHashSet(chunks);
-            
+
             List<ChunkContent> latestContent = new List<ChunkContent>();
 
             bool foundCachedChunk = false;
@@ -88,8 +87,6 @@ namespace Server.Service
 
                 }
             }
-            LogPerformance("Server sent chunks at " + DateTime.Now.ToString("hh.mm.ss.ffffff"));
-
             return latestContent;
         }
 

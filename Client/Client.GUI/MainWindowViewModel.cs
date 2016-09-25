@@ -13,7 +13,7 @@ namespace Client.GUI
     class MainWindowViewModel : INotifyPropertyChanged
     {
         private readonly string ClientFilesLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "ClientFiles");
-        private readonly string PerformanceFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "log.txt");
+        private readonly string PerformanceFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "711 Files - Megan Ganley", "performance.txt");
 
 
         private string[] _fullServerPaths = { };                 // TODO: FIX
@@ -61,10 +61,6 @@ namespace Client.GUI
             // alert user that download is in progress
             ListOfFilesToDisplay[SelectedIndex].Status = "Downloading...";
 
-            Stopwatch s = new Stopwatch();
-
-            s.Start();
-
             using (var client = new FileServiceReference.CacheFileServiceClient())
             {
                 byte[] b = await client.GetFileAsync(_fullServerPaths[SelectedIndex]);
@@ -72,11 +68,7 @@ namespace Client.GUI
                 File.WriteAllBytes(System.IO.Path.Combine(ClientFilesLocation, _fileNames[SelectedIndex]), b);
 
             }
-
-            s.Stop();
-            LogPerformance("Total time taken: " + s.ElapsedMilliseconds + "ms\n");
-            s.Reset();
-
+        
             // alert user that file has been downloaded
             ListOfFilesToDisplay[SelectedIndex].Status = "Downloaded";
 
