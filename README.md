@@ -1,4 +1,4 @@
-#### COMPSCI 711 A1
+# COMPSCI 711 A1
 
 Included in this assignment are three solutions – one representing each, client, cache and server. Compile and run the solutions from the desktop, ensuring that each solution is set to the right start-up program (they should be `Client.GUI`, `Cache.GUI` and `Server.ConsoleApp`). The programs should create a folder on your desktop called `711 Files – Megan Ganley`, and nested inside will be a folder to hold files for each of the three programs respectively. Theoretically, we could store these 3 folders, and run these 3 programs anywhere, but for the purposes of this assignment, we conveniently keep everything in one place. 
 
